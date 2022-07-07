@@ -1,18 +1,24 @@
 from app.models import db, User
+from datetime import date
 
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        username='Demo', email='demo@aa.io', password='password')
-    marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
-    bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+        username='Demo', email='demo@aa.io', password='password', phone_number='4154171991', about_me='', birthday=date(2000, 1, 1), online_status='online')
+    john = User(
+        username='seedData4lyf', email='john@aa.io', password='password', phone_number='2524142434', about_me='I love seed data', birthday=date(1887, 6, 3), online_status='online')
+    dylan = User(
+        username='Dylan', email='info@dylanpeate.com', password='password', phone_number='7722336222', about_me='', birthday=date(2002, 1, 12), online_status='away'
+    )
+    fino = User(
+        username='Gorilla', email='elisaia55@yahoo.com', password='password', phone_number='5102849432', about_me='bad at football', birthday=date(1997, 4, 13), online_status='DND'
+    )
 
     db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
+    db.session.add(john)
+    db.session.add(dylan)
+    db.session.add(fino)
 
     db.session.commit()
 
