@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 let socket;
 
+//test
+
 const Messages = () => {
     const [chatInput, setChatInput] = useState('')
     const [messages, setMessages] = useState([])
