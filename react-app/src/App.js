@@ -8,6 +8,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import ProfilePage from './components/profilePage';
+import Messages from './components/messages';
 import { authenticate } from './store/session';
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
+        <ProtectedRoute path='/test'>
+          <Messages />
+        </ProtectedRoute>
         <ProtectedRoute path='/me'>
           <ProfilePage />
         </ProtectedRoute>
