@@ -1,4 +1,4 @@
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 import os
 
 
@@ -10,9 +10,10 @@ if os.environ.get("FLASK_ENV") == "production":
 else:
     origins = "*"
 
-socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True)
+socketio = SocketIO(cors_allowed_origins=origins)
+#, logger=True, engineio_logger=True
 
-
+@socketio.on('chat')
 def handle_chat(data):
     print(data)
     emit("chat", data, broadcast=True)
