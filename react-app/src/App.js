@@ -11,6 +11,7 @@ import ProfilePage from './components/profilePage';
 import Messages from './components/messages';
 import { authenticate } from './store/session';
 import { getAllUsers } from './store/allUsers';
+import { getMessages } from './store/messages';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -20,6 +21,7 @@ function App() {
     (async () => {
       await dispatch(getAllUsers())
       await dispatch(authenticate());
+      await dispatch(getMessages())
       setLoaded(true);
     })();
   }, [dispatch]);
