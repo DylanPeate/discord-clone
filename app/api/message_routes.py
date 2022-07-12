@@ -6,9 +6,20 @@ from app import socketio
 
 
 message_routes = Blueprint('messages', __name__)
-# stili_routes = Blueprint('message', __name__)
 
-# @stili_routes.route('', methods=["POST"])
+
+@message_routes.route('/edit/<int:id>', methods=["POST"])
+# @login_required
+def edit_message(id):
+    data = request.get_json()
+    msg = Message.query.filter_by(id=id).first()
+    msg.body = data['body']
+    db.session.commit()
+    print(f"===================================={msg.to_dict()}====================================")
+    socketio.emit('edit', msg.to_dict())
+    return msg.to_dict()
+
+
 @message_routes.route('/new', methods=["GET","POST"])
 @login_required
 def send_message():
@@ -20,16 +31,14 @@ def send_message():
         message_type='text',
         edited=False
     )
-    print(newMsg.to_dict())
-    socketio.emit('chat', newMsg.to_dict())
     db.session.add(newMsg)
     db.session.commit()
-
+    socketio.emit('chat', newMsg.to_dict())
     return newMsg.to_dict()
 
 
 @message_routes.route('/load', methods=['GET'])
-# @login_required
+@login_required
 def load_messages():
     #add channel Id
     messages = Message.query.order_by(Message.id).all()
@@ -40,6 +49,7 @@ def load_messages():
         rList[tmpId] = tmp
     return jsonify(rList)
 
+
 @message_routes.route('/delete/<int:id>', methods=['DELETE'])
 @login_required
 def deleteMsg(id):
@@ -47,13 +57,4 @@ def deleteMsg(id):
     msg = Message.query.filter_by(id=id).first()
     db.session.delete(msg)
     db.session.commit()
-
-
-    # messages = Message.query.order_by(Message.id).all()
-    # rList = {}
-    # for message in messages:
-    #     tmp = message.to_dict()
-    #     tmpId = tmp['id']
-    #     rList[tmpId] = tmp
-    # return jsonify(rList)
-    return jsonify('test')
+    return jsonify('message deleted')

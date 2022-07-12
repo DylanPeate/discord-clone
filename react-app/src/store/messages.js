@@ -17,6 +17,24 @@ const delMsg = (messageId) => ({
     payload: messageId
 })
 
+
+export const editMessage = (message) => async (dispatch) => {
+    const response = await fetch(`/api/messages/edit/${message.id}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+    })
+    if (response.ok) {
+        const data = await response.json()
+        await dispatch(newMessage(data))
+        // await dispatch(getMessages())
+        return response
+    }
+}
+
+
 export const removeMessage = (messageId) => async (dispatch) => {
     const response = await fetch(`/api/messages/delete/${messageId}`, {
         method: "DELETE",
@@ -35,7 +53,7 @@ export const getMessages = () => async (dispatch) => {
     const response = await fetch('/api/messages/load')
     const data = await response.json()
     dispatch(loadMessages(data))
-    return response
+    return data
 }
 
 
