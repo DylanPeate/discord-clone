@@ -9,15 +9,13 @@ const Messages = () => {
     const dispatch = useDispatch()
     const [chatInput, setChatInput] = useState('')
     const [editInput, setEditInput] = useState('')
-    const [deleted, setDeleted] = useState([])
-    const [loaded, setLoaded] = useState(false)
+    const [errors, setErrors] = useState([])
     const [editing, setEditing] = useState(-1)
     const user = useSelector(state => state.session.user)
     const allMsgs = Object.values(useSelector(state => state.messages))
     const [messages, setMessages] = useState(allMsgs)
     const allUsers = Object.values(useSelector(state => state.allUsers))
     const currentUser = useSelector(state => state.session.user)
-
 
 
     useEffect(() => {
@@ -44,13 +42,20 @@ const Messages = () => {
             })()
         })
 
-
-
         return (() => {
             socket.disconnect()
             console.log('disconnected')
         })
     }, [])
+
+    const newErrorCheck = () => {
+        const data = []
+        if (chatInput.length > 2000) {
+            data.push('Message can not be more than 2000 characters')
+        }
+
+        setErrors(data)
+    }
 
     const sendChat = (e) => {
         e.preventDefault()
@@ -74,18 +79,32 @@ const Messages = () => {
     const deleteMsg = async (msg) => {
         dispatch(removeMessage(msg.id))
     }
+
     const editBtn = (id = -1) => {
         setEditing(id)
         console.log(editing, '<===EDITING')
     }
+
     const editSubmit = (e, message) => {
         e.preventDefault()
-        const newMsg = {
-            id: message.id,
-            body: editInput,
+
+        if (editInput === message.body) {
+            setEditing(-1)
+        } else {
+            const newMsg = {
+                id: message.id,
+                body: editInput,
+            }
+            dispatch(editMessage(newMsg))
+            setEditing(-1)
         }
-        dispatch(editMessage(newMsg))
-        setEditing(-1)
+
+    }
+
+    const submitDisable = () => {
+        if (!chatInput.length) return true
+        if (chatInput.length > 2000) return true
+        else return false
     }
 
 
@@ -98,7 +117,6 @@ const Messages = () => {
             <div>
                 {messages?.map((message, ind) => (
                     <div key={ind} className='message-container'>
-
                         {editing !== message.id ?
                             <div>{`${getUserName(message)}: ${message.body}`}</div> :
                             <div>
@@ -129,7 +147,8 @@ const Messages = () => {
                     value={chatInput}
                     onChange={e => setChatInput(e.target.value)}
                 ></input>
-                <button type="submit">Send</button>
+                <button disabled={submitDisable()} type="submit">Send</button>
+                <p>{2000 - chatInput.length}</p>
             </form>
         </div>
 
