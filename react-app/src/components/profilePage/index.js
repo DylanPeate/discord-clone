@@ -42,7 +42,7 @@ function ProfilePage() {
                 Welcome to your profile {sessionUser.username}
             </div>
             <div>
-                Your profile picture: <img src={sessionUser.profile_pic}></img>
+                Your profile picture: <img alt='' src={sessionUser.profile_pic}></img>
             </div>
             <form onSubmit={handleSubmit}>
                 <input

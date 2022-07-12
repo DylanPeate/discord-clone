@@ -10,6 +10,7 @@ import User from './components/User';
 import ProfilePage from './components/profilePage';
 import Messages from './components/messages';
 import { authenticate } from './store/session';
+import { getAllUsers } from './store/allUsers';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -17,6 +18,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
+      await dispatch(getAllUsers())
       await dispatch(authenticate());
       setLoaded(true);
     })();

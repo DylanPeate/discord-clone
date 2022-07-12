@@ -9,7 +9,13 @@ user_routes = Blueprint('users', __name__)
 @login_required
 def users():
     users = User.query.all()
-    return {'users': [user.to_dict() for user in users]}
+    rList = {}
+    for user in users:
+        tmp = user.to_dict()
+        tmpId = tmp['id']
+        rList[tmpId] = tmp
+    return jsonify(rList)
+    # return {'users': [user.to_dict() for user in users]}
 
 
 @user_routes.route('/<int:id>')
