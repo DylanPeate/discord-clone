@@ -8,14 +8,14 @@ let socket;
 const Messages = () => {
     const dispatch = useDispatch()
     const [chatInput, setChatInput] = useState('')
-    const [messages, setMessages] = useState([])
     const [deleted, setDeleted] = useState([])
     const [loaded, setLoaded] = useState(false)
     const user = useSelector(state => state.session.user)
     const allMsgs = Object.values(useSelector(state => state.messages))
+    const [messages, setMessages] = useState(allMsgs)
     const allUsers = Object.values(useSelector(state => state.allUsers))
     const currentUser = useSelector(state => state.session.user)
-
+    // console.log(messages, 'On Load')
 
 
 
@@ -33,9 +33,8 @@ const Messages = () => {
         })
 
         socket.on('delMsg', msgId => {
-            console.log('deleted message')
+            // console.log('deleted message')
             dispatch(getMessages())
-            console.log(allMsgs, '<==ALLMSGS')
             setMessages(allMsgs)
         })
 
@@ -45,13 +44,13 @@ const Messages = () => {
         })
     }, [])
 
-    useEffect(() => {
-        if (!loaded) {
-            setMessages(allMsgs)
-        } else {
-            setLoaded(true)
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (!loaded) {
+    //         setMessages(allMsgs)
+    //     } else {
+    //         setLoaded(true)
+    //     }
+    // }, [])
 
     const sendChat = (e) => {
         e.preventDefault()
@@ -75,7 +74,7 @@ const Messages = () => {
 
     const deleteMsg = async (msg) => {
         dispatch(removeMessage(msg.id))
-        dispatch(getMessages())
+        // dispatch(getMessages())
         // setDeleted([msg])
         // console.log(messages, '<==ALLMSGS, del')
     }

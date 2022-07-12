@@ -49,10 +49,11 @@ def deleteMsg(id):
     db.session.commit()
 
 
-    messages = Message.query.order_by(Message.id).all()
-    rList = {}
-    for message in messages:
-        tmp = message.to_dict()
-        tmpId = tmp['id']
-        rList[tmpId] = tmp
-    return jsonify(rList)
+    # messages = Message.query.order_by(Message.id).all()
+    # rList = {}
+    # for message in messages:
+    #     tmp = message.to_dict()
+    #     tmpId = tmp['id']
+    #     rList[tmpId] = tmp
+    # return jsonify(rList)
+    return jsonify('test')

@@ -119,7 +119,6 @@ export default function reducer(state = initialState, action) {
     case REMOVE_USER:
       return { user: null }
     case LOAD_USERS:
-      console.log(action.payload, '<--LOOK HERE NOW')
       return { ...state, allUsers: action.payload }
     default:
       return state;
