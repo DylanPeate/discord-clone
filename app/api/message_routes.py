@@ -38,7 +38,6 @@ def send_message():
 
 
 @message_routes.route('/load', methods=['GET'])
-@login_required
 def load_messages():
     #add channel Id
     messages = Message.query.order_by(Message.id).all()
