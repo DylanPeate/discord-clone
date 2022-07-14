@@ -8,6 +8,8 @@ class Channel(db.Model):
     name = db.Column(db.String(30), nullable = False, unique = False)
     # message_id = db.Column(db.Integer, db.ForeignKey('messages.id'), nullable = False, unique = False)
     channel_type = db.Column(db.String(), nullable = False, unique = False)
+    server_id = db.Column(db.Integer, db.ForeignKey('servers.id'), nullable = True, unique = False)
+    default_status = db.Column(db.Boolean, nullable=False, unique = False)
 
     users = db.relationship('User', back_populates='channels')
     # messages = db.relationship('Message', back_populates='channels', cascade='all,delete')
@@ -19,6 +21,8 @@ class Channel(db.Model):
             'id': self.id,
             'owner_id': self.owner_id,
             'name': self.name,
-            'message_id': self.message_id,
-            'channel_type': self.channel_type
+            # 'message_id': self.message_id,
+            'channel_type': self.channel_type,
+            'server_id': self.server_id,
+            'default_status': self.default_status
         }

@@ -2,6 +2,7 @@
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
 const LOAD_USERS = 'session/LOAD_USERS'
+const LOAD_SERVERS = 'session/LOAD_SERVERS'
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -17,12 +18,16 @@ const loadUsers = (users) => ({
   payload: users
 })
 
+const loadServers = (servers) => ({
+  type: LOAD_SERVERS,
+  payload: servers
+})
+
 const initialState = { user: null };
 
 export const getAllUsers = () => async (dispatch) => {
   const response = await fetch('/api/users/')
   const data = await response.json()
-  console.log(data, '<-----USERS')
   dispatch(loadUsers(data))
   return data
 }
@@ -38,10 +43,11 @@ export const authenticate = () => async (dispatch) => {
     if (data.errors) {
       return;
     }
-
+    dispatch(loadUserServers(data.id))
     dispatch(setUser(data));
   }
 }
+
 
 export const login = (email, password) => async (dispatch) => {
   const response = await fetch('/api/auth/login', {
@@ -69,6 +75,14 @@ export const login = (email, password) => async (dispatch) => {
     return ['An error occurred. Please try again.']
   }
 
+}
+
+export const loadUserServers = (userId) => async (dispatch) => {
+  const response = await fetch(`/api/servers/${userId}`)
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(loadServers(data))
+  }
 }
 
 export const logout = () => async (dispatch) => {
@@ -116,6 +130,8 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
       return { user: action.payload }
+    case LOAD_SERVERS:
+      return { ...state, servers: action.payload }
     case REMOVE_USER:
       return { user: null }
     case LOAD_USERS:

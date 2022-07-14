@@ -5,11 +5,12 @@ import messagesReducer, { sendMessage, getMessages, removeMessage, editMessage }
 let socket;
 
 
-const Messages = () => {
+const Messages = (props) => {
+    console.log(props, "<===HERE PROPS")
+    const activeChannel = props.activeChannel
     const dispatch = useDispatch()
     const [chatInput, setChatInput] = useState('')
     const [editInput, setEditInput] = useState('')
-    const [errors, setErrors] = useState([])
     const [editing, setEditing] = useState(-1)
     const user = useSelector(state => state.session.user)
     const allMsgs = Object.values(useSelector(state => state.messages))
@@ -19,11 +20,14 @@ const Messages = () => {
 
 
     useEffect(() => {
+        console.log('ACTIVE CHANNEL CHANGED IN MESSAGES TO -->', activeChannel)
         setMessages(allMsgs)
         socket = io()
+
+        socket.emit("join", activeChannel)
+
         socket.on('chat', chat => {
-            console.log(chat, "<===THIS")
-            setMessages(messages => [...messages, chat])
+            setMessages(messages => [...messages, chat]);
         })
 
         socket.on('delMsg', msgId => {
@@ -46,16 +50,7 @@ const Messages = () => {
             socket.disconnect()
             console.log('disconnected')
         })
-    }, [])
-
-    const newErrorCheck = () => {
-        const data = []
-        if (chatInput.length > 2000) {
-            data.push('Message can not be more than 2000 characters')
-        }
-
-        setErrors(data)
-    }
+    }, [activeChannel])
 
     const sendChat = (e) => {
         e.preventDefault()
@@ -63,6 +58,7 @@ const Messages = () => {
             user_id: user.id,
             username: user.username,
             body: chatInput,
+            channel_id: activeChannel,
         }
         dispatch(sendMessage(newMsg))
         setChatInput('')
@@ -82,7 +78,6 @@ const Messages = () => {
 
     const editBtn = (id = -1) => {
         setEditing(id)
-        console.log(editing, '<===EDITING')
     }
 
     const editSubmit = (e, message) => {
@@ -98,7 +93,6 @@ const Messages = () => {
             dispatch(editMessage(newMsg))
             setEditing(-1)
         }
-
     }
 
     const submitDisable = () => {
@@ -109,36 +103,36 @@ const Messages = () => {
 
 
     return (user &&
-        <div>
-            <div>
-                <p>Messages Length:</p>
-                {messages?.length}
-            </div>
+        <div className='message-box'>
             <div>
                 {messages?.map((message, ind) => (
-                    <div key={ind} className='message-container'>
-                        {editing !== message.id ?
-                            <div>{`${getUserName(message)}: ${message.body}`}</div> :
-                            <div>
-                                <form onSubmit={e => editSubmit(e, message)}>
-                                    <input
-                                        defaultValue={message.body}
-                                        onChange={e => setEditInput(e.target.value)}
-                                    ></input>
-                                </form>
-                            </div>
-                        }
+                    <div key={ind}>
+                        {message.channel_id === activeChannel ?
+                            <div className='message-container'>
+                                <div>
+                                    {editing !== message.id ?
+                                        <div>{`${getUserName(message)}: ${message.body}`}</div> :
+                                        <div>
+                                            <form onSubmit={e => editSubmit(e, message)}>
+                                                <input
+                                                    defaultValue={message.body}
+                                                    onChange={e => setEditInput(e.target.value)}
+                                                ></input>
+                                            </form>
+                                        </div>
+                                    }
+                                    <div>
+                                        {message.user_id === currentUser.id &&
+                                            <div>
+                                                <button onClick={e => deleteMsg(message)}>Delete</button>
+                                                <button onClick={e => editBtn(message.id)}>Edit</button>
+                                                <button onClick={e => editBtn()}>Cancel</button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
 
-
-
-
-                        {message.user_id === currentUser.id &&
-                            <>
-                                <button onClick={e => deleteMsg(message)}>Delete</button>
-                                <button onClick={e => editBtn(message.id)}>Edit</button>
-                                <button onClick={e => editBtn()}>Cancel</button>
-                            </>
-                        }
+                            </div> : <div></div>}
                     </div>
                 ))}
             </div>

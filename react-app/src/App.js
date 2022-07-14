@@ -9,6 +9,8 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import ProfilePage from './components/profilePage';
 import Messages from './components/messages';
+import Servers from './components/servers'
+import Channels from './components/channels';
 import { authenticate } from './store/session';
 import { getAllUsers } from './store/allUsers';
 import { getMessages } from './store/messages';
@@ -19,8 +21,8 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await dispatch(getAllUsers())
       await dispatch(authenticate());
+      await dispatch(getAllUsers())
       await dispatch(getMessages())
       setLoaded(true);
     })();
@@ -34,6 +36,9 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
+        <ProtectedRoute path='/channels/:serverId/:channelId'>
+          <Channels />
+        </ProtectedRoute>
         <ProtectedRoute path='/test'>
           <Messages />
         </ProtectedRoute>
@@ -46,14 +51,11 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
-          <UsersList />
-        </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
         </ProtectedRoute>
         <ProtectedRoute path='/' exact={true} >
-          <h1>My Home Page</h1>
+          <Servers />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

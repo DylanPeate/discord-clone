@@ -14,11 +14,15 @@ def seed_users():
     fino = User(
         username='Gorilla', email='elisaia55@yahoo.com', password='password', phone_number='5102849432', about_me='bad at football', birthday=date(1997, 4, 13), online_status='DND'
     )
+    patrick = User(
+        username='Flakes', email='p.mcginn.m@gmail.com', password='password', phone_number='8022822223', about_me='Tarkov Enjoyer', birthday=date(1992,3,24), online_status='online'
+    )
 
     db.session.add(demo)
     db.session.add(john)
     db.session.add(dylan)
     db.session.add(fino)
+    db.session.add(patrick)
 
     db.session.commit()
 
