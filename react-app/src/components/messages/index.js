@@ -6,7 +6,6 @@ let socket;
 
 
 const Messages = (props) => {
-    console.log(props, "<===HERE PROPS")
     const activeChannel = props.activeChannel
     const dispatch = useDispatch()
     const [chatInput, setChatInput] = useState('')
@@ -20,14 +19,19 @@ const Messages = (props) => {
 
 
     useEffect(() => {
-        console.log('ACTIVE CHANNEL CHANGED IN MESSAGES TO -->', activeChannel)
         setMessages(allMsgs)
         socket = io()
 
         socket.emit("join", activeChannel)
 
         socket.on('chat', chat => {
-            setMessages(messages => [...messages, chat]);
+            // console.log(chat, '<====LOOK CHAT')
+            (async () => {
+                dispatch(getMessages()).then((res) => {
+                    setMessages(Object.values(res))
+                })
+            })()
+            // setMessages(messages => [...messages, chat]);
         })
 
         socket.on('delMsg', msgId => {
@@ -82,7 +86,6 @@ const Messages = (props) => {
 
     const editSubmit = (e, message) => {
         e.preventDefault()
-
         if (editInput === message.body) {
             setEditing(-1)
         } else {
@@ -115,9 +118,11 @@ const Messages = (props) => {
                                         <div>
                                             <form onSubmit={e => editSubmit(e, message)}>
                                                 <input
+                                                    required={true}
                                                     defaultValue={message.body}
                                                     onChange={e => setEditInput(e.target.value)}
                                                 ></input>
+                                                <button type='button' onClick={e => editBtn()}>Cancel</button>
                                             </form>
                                         </div>
                                     }
@@ -126,7 +131,7 @@ const Messages = (props) => {
                                             <div>
                                                 <button onClick={e => deleteMsg(message)}>Delete</button>
                                                 <button onClick={e => editBtn(message.id)}>Edit</button>
-                                                <button onClick={e => editBtn()}>Cancel</button>
+
                                             </div>
                                         }
                                     </div>

@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Channels from "../channels";
+import { loadUserServers } from "../../store/session";
 import './servers.css'
 
 
 const Servers = () => {
+    const dispatch = useDispatch()
     const serverObj = useSelector(state => state.session.servers)
     const sessionUser = useSelector(state => state.session.user)
     const [activeServer, setActiveServer] = useState({ id: 1, default_channel_id: 1 })
 
+    useEffect(() => {
+
+    }, [serverObj])
+
+
     if (!serverObj) {
+        dispatch(loadUserServers(sessionUser.id))
         return (
-            <h1>No servers</h1>
+            <h1>Loading servers...</h1>
         )
     }
 

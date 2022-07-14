@@ -38,7 +38,7 @@ def send_message():
     db.session.add(newMsg)
     db.session.commit()
     message = newMsg.to_dict()
-    socketio.emit('chat', message, to=str(message['channel_id']), broadcast=True)
+    socketio.emit('chat', message, to=message['channel_id'], broadcast=True)
     return newMsg.to_dict()
 
 

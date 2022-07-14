@@ -44,7 +44,7 @@ export const authenticate = () => async (dispatch) => {
       return;
     }
     dispatch(loadUserServers(data.id))
-    dispatch(setUser(data));
+    await dispatch(setUser(data));
   }
 }
 
