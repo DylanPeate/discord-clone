@@ -1,3 +1,4 @@
+import { io } from 'socket.io-client'
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from 'react-router-dom'
@@ -20,6 +21,32 @@ const Channels = (props) => {
     const [newChannelName, setNewChannelName] = useState('')
     const [chEditing, setChEditing] = useState(-1)
     const [chEditInput, setChEditInput] = useState('')
+
+    useEffect(() => {
+        socket = io()
+
+        socket.on('newChannel', channel => {
+            dispatch(loadChannels(serverId))
+            console.log('new channel event')
+        })
+
+        socket.on('delChannel', channelId => {
+
+            (async () => {
+                dispatch(loadChannels(serverId)).then((res) => {
+                    console.log('del channel event')
+                })
+            })()
+
+            // dispatch(loadChannels(serverId))
+        })
+
+        socket.on('editChannel', channel => {
+            dispatch(loadChannels(serverId))
+            console.log('edit channel event')
+        })
+
+    }, [])
 
 
 
