@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from 'react-router-dom'
 
 import Messages from "../messages";
-import { loadChannels, createChannel, deleteChannel, editChannelStore } from "../../store/channels";
+import { loadChannels, createChannel, deleteChannel, editChannelStore, updateDelete } from "../../store/channels";
 import './channels.css'
 
 let socket;
@@ -32,8 +32,14 @@ const Channels = (props) => {
             console.log('new channel event')
         })
 
-        socket.on('delChannel', channelId => {
-            dispatch(loadChannels(serverId))
+        socket.on('delChannel', channel => {
+
+
+            // dispatch(loadChannels(serverId))
+            dispatch(updateDelete(channel))
+
+            // dispatch(loadChannels(serverId))
+            console.log('Del channel')
         })
 
         socket.on('editChannel', channel => {

@@ -43,10 +43,11 @@ def new_channel():
 @login_required
 def del_channel(id):
     channel = Channel.query.filter_by(id=id).first()
+    tmp = channel.to_dict()
     db.session.delete(channel)
     db.session.commit()
 
-    socketio.emit('delChannel', id)
+    socketio.emit('delChannel', tmp)
     return jsonify('Channel Deleted')
 
 @channel_routes.route('/edit/<int:id>', methods=['POST'])

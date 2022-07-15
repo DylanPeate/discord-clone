@@ -49,6 +49,12 @@ export const deleteChannel = (channel) => async (dispatch) => {
     }
 }
 
+export const updateDelete = (channel) => async (dispatch) => {
+    console.log(channel)
+    console.log('hit update state')
+    await dispatch(delChannel(channel))
+}
+
 export const createChannel = (channel) => async (dispatch) => {
     const response = await fetch('/api/channels/new', {
         method: 'POST',
