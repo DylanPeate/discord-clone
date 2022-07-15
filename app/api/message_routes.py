@@ -9,13 +9,14 @@ message_routes = Blueprint('messages', __name__)
 
 
 @message_routes.route('/edit/<int:id>', methods=["POST"])
-# @login_required
+@login_required
 def edit_message(id):
     data = request.get_json()
     msg = Message.query.filter_by(id=id).first()
     msg.body = data['body']
+    msg.edited = True
     db.session.commit()
-    print(f"===================================={msg.to_dict()}====================================")
+
     socketio.emit('edit', msg.to_dict())
     return msg.to_dict()
 
@@ -25,15 +26,19 @@ def edit_message(id):
 def send_message():
     data = request.get_json()
 
+
     newMsg = Message(
         user_id=data['user_id'],
         body=data['body'],
         message_type='text',
-        edited=False
+        image_link='',
+        edited=False,
+        channel_id=data['channel_id'],
     )
     db.session.add(newMsg)
     db.session.commit()
-    socketio.emit('chat', newMsg.to_dict())
+    message = newMsg.to_dict()
+    socketio.emit('chat', message, to=message['channel_id'], broadcast=True)
     return newMsg.to_dict()
 
 

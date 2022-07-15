@@ -20,5 +20,7 @@ class Message(db.Model):
             'user_id': self.user_id,
             'body': self.body,
             'message_type': self.message_type,
-            'image_link': self.image_link
+            'image_link': self.image_link,
+            'edited': self.edited,
+            'channel_id': self.channel_id,
         }

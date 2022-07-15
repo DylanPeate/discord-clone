@@ -1,4 +1,4 @@
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room
 from .models.message import Message
 import os
 
@@ -14,13 +14,16 @@ else:
 socketio = SocketIO(cors_allowed_origins="*")
 #, logger=True, engineio_logger=True
 
-@socketio.on('chat')
-def handle_chat(data):
-    emit("chat", data, broadcast=True)
+# @socketio.on('chat')
+# def handle_chat(data):
+#     emit("chat", data, to=str(data['channel_id']), broadcast=True)
 
 
+@socketio.on('join')
+def onJoin(room):
+    join_room(room)
 
-# @socketio.on_error_default
-# def default_error_handler(e):
-#     print(e)
-#     pass
+
+@socketio.on('leave')
+def onLeave(room):
+    leave_room(room)

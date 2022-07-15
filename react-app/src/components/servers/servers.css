@@ -1,0 +1,18 @@
+.server-outer-container {
+    display: flex;
+    padding: .5rem;
+
+}
+
+.server-icons {
+    max-width: 100%;
+    max-height: 80px;
+}
+
+.servers-container {
+    max-width: 130px;
+    width: 132px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(32, 34, 37);
+}

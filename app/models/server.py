@@ -5,9 +5,9 @@ class Server(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False, unique = False)
-    channel_id = db.Column(db.Integer, db.ForeignKey('channels.id'), nullable = False, unique = True)
     icon = db.Column(db.String(), nullable = True, unique = False)
     name = db.Column(db.String(), nullable = False, unique = False)
+    default_channel_id = db.Column(db.Integer, nullable = True, unique = True)
 
     users = db.relationship('User', back_populates='servers')
     channels = db.relationship('Channel', back_populates='servers')
@@ -17,7 +17,7 @@ class Server(db.Model):
         return {
             'id': self.id,
             'owner_id': self.owner_id,
-            'channel_id': self.channel_id,
             'icon': self.icon,
-            'name': self.name
+            'name': self.name,
+            'default_channel_id': self.default_channel_id
         }

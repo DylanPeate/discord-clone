@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, db, Server_User
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -67,10 +67,27 @@ def sign_up():
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password'],
+            phone_number=None,
+            profile_pic='http://discord-clone-bucket.s3.amazonaws.com/95545e55f2394389aefc76fd6fc67610.jpeg',
+            about_me=None,
             birthday=form.data['birthday'],
-            online_status='online'
+            online_status='online',
+
         )
         db.session.add(user)
+        db.session.commit()
+        newUser = user.to_dict()
+        print(f"=========={newUser} <THIS==========")
+        newServer = Server_User(
+            server_id=1,
+            user_id=newUser['id']
+        )
+        newServer2 = Server_User(
+            server_id=2,
+            user_id=newUser['id']
+        )
+        db.session.add(newServer)
+        db.session.add(newServer2)
         db.session.commit()
         login_user(user)
         return user.to_dict()
