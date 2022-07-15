@@ -2,6 +2,7 @@ import { io } from 'socket.io-client'
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import messagesReducer, { sendMessage, getMessages, removeMessage, editMessage } from '../../store/messages'
+import './messages.css'
 let socket;
 
 
@@ -26,12 +27,12 @@ const Messages = (props) => {
 
         socket.on('chat', chat => {
             // console.log(chat, '<====LOOK CHAT')
-            (async () => {
-                dispatch(getMessages()).then((res) => {
-                    setMessages(Object.values(res))
-                })
-            })()
-            // setMessages(messages => [...messages, chat]);
+            // (async () => {
+            //     dispatch(getMessages()).then((res) => {
+            //         setMessages(Object.values(res))
+            //     })
+            // })()
+            setMessages(messages => [...messages, chat]);
         })
 
         socket.on('delMsg', msgId => {

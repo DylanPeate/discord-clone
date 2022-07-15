@@ -21,6 +21,8 @@ const Channels = (props) => {
     const [newChannelName, setNewChannelName] = useState('')
     const [chEditing, setChEditing] = useState(-1)
     const [chEditInput, setChEditInput] = useState('')
+    const [errors, setErrors] = useState([])
+    const [channelSubmitted, setChannelSubmitted] = useState(false)
 
     useEffect(() => {
         socket = io()
@@ -31,14 +33,7 @@ const Channels = (props) => {
         })
 
         socket.on('delChannel', channelId => {
-
-            (async () => {
-                dispatch(loadChannels(serverId)).then((res) => {
-                    console.log('del channel event')
-                })
-            })()
-
-            // dispatch(loadChannels(serverId))
+            dispatch(loadChannels(serverId))
         })
 
         socket.on('editChannel', channel => {
@@ -62,6 +57,22 @@ const Channels = (props) => {
         }
     }, [serverId])
 
+    const channelValidate = () => {
+        const data = []
+        if (newChannelName.length > 30) {
+            data.push('Name can not be longer than 30 characters.')
+        }
+        if (newChannelName.length < 1) {
+            data.push('Name required')
+        }
+        setErrors(data)
+    }
+
+    useEffect(() => {
+        console.log(errors, channelSubmitted, "<======")
+        channelValidate()
+    }, [newChannelName])
+
     if (channelList.length < 1) {
         return (
             <h2>loading channels...</h2>
@@ -73,14 +84,18 @@ const Channels = (props) => {
     }
 
     const newChannel = () => {
-        let channel = {
-            owner_id: user.id,
-            name: newChannelName,
-            channel_type: 'text',
-            server_id: serverId,
+        setChannelSubmitted(true)
+        // channelValidate()
+        if (!errors.length) {
+            let channel = {
+                owner_id: user.id,
+                name: newChannelName,
+                channel_type: 'text',
+                server_id: serverId,
+            }
+            dispatch(createChannel(channel))
+            setNewChannelName('')
         }
-        dispatch(createChannel(channel))
-        setNewChannelName('')
     }
 
     const delChannel = (channel) => {
@@ -93,8 +108,7 @@ const Channels = (props) => {
 
     const editChannelSubmit = (e, channel) => {
         e.preventDefault()
-
-        if (chEditInput === channel.name || chEditInput.length > 30) {
+        if (chEditInput === channel.name || chEditInput === '') {
             setChEditing(-1)
         } else {
             const newCh = {
@@ -104,6 +118,7 @@ const Channels = (props) => {
             dispatch(editChannelStore(newCh))
             setChEditing(-1)
         }
+        setChEditInput('')
     }
 
     return (
@@ -117,6 +132,12 @@ const Channels = (props) => {
                         onChange={e => setNewChannelName(e.target.value)}
                     ></input>
                     <button onClick={e => newChannel()}>New</button>
+                    <div>
+                        {errors.length > 0 && channelSubmitted && errors.map((error, ind) => {
+                            { console.log('should be showing errors', error) }
+                            <div key={ind} className='new-channel-errors'>Error: {error}</div>
+                        })}
+                    </div>
                 </div>
                 <div>
                     {/* <p>TEXT CHANNELS</p> */}

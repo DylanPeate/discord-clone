@@ -35,9 +35,9 @@ const Servers = () => {
                 <div className='servers-container'>
                     {serverList.map((server, ind) => (
                         <div key={ind} >
-                            <img className="server-icons" src={server.icon}></img>
+                            <img onClick={e => changeServer(server)} className="server-icons" src={server.icon}></img>
                             {/* <a href={`/channels/${server.id}/${server.default_channel_id}`}>{server.name}</a> */}
-                            <button onClick={e => changeServer(server)}>{server.name}</button>
+                            {/* <button onClick={e => changeServer(server)}>{server.name}</button> */}
                         </div>
                     ))}
                 </div>

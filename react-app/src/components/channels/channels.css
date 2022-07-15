@@ -1,3 +1,9 @@
 .channel-container {
     display: flex;
+    background-color: rgb(47, 49, 54);
+}
+
+.new-channel-errors {
+    color: red;
+    z-index: 1000;
 }
