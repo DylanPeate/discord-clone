@@ -33,12 +33,7 @@ const Channels = (props) => {
         })
 
         socket.on('delChannel', channel => {
-
-
-            // dispatch(loadChannels(serverId))
             dispatch(updateDelete(channel))
-
-            // dispatch(loadChannels(serverId))
             console.log('Del channel')
         })
 
