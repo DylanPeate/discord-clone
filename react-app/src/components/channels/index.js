@@ -33,6 +33,7 @@ const Channels = (props) => {
         })
 
         socket.on('delChannel', channel => {
+            //del fix?
             dispatch(updateDelete(channel))
             console.log('Del channel')
         })
