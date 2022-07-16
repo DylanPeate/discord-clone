@@ -105,6 +105,12 @@ const Messages = (props) => {
         else return false
     }
 
+    const editDisable = () => {
+        if (!editInput.length) return true
+        if (editInput.length > 2000) return true
+        else return false
+    }
+
 
     return (user &&
         <div className='message-box'>
@@ -123,6 +129,8 @@ const Messages = (props) => {
                                                     defaultValue={message.body}
                                                     onChange={e => setEditInput(e.target.value)}
                                                 ></input>
+                                                {editInput.length > 2000 ? <p id='red-text'>{2000 - editInput.length}</p> : editInput.length > 1799 ? <p>{2000 - editInput.length}</p> : <p></p>}
+                                                <button type='submit' disabled={editDisable()}>submit</button>
                                                 <button type='button' onClick={e => editBtn()}>Cancel</button>
                                             </form>
                                         </div>
@@ -148,7 +156,8 @@ const Messages = (props) => {
                     onChange={e => setChatInput(e.target.value)}
                 ></input>
                 <button disabled={submitDisable()} type="submit">Send</button>
-                <p>{2000 - chatInput.length}</p>
+                {/* {chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : <p></p>} */}
+                {chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : <p></p>}
             </form>
         </div>
 
