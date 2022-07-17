@@ -5,17 +5,17 @@ from datetime import date
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        username='Demo', email='demo@aa.io', password='password', phone_number='4154171991', about_me='', birthday=date(2000, 1, 1), online_status='online')
+        username='Demo', email='demo@aa.io', password='password', phone_number='4154171991', profile_pic='http://discord-clone-bucket.s3.amazonaws.com/95545e55f2394389aefc76fd6fc67610.jpeg', about_me='', birthday=date(2000, 1, 1), online_status='online')
     john = User(
-        username='seedData4lyf', email='john@aa.io', password='password', phone_number='2524142434', about_me='I love seed data', birthday=date(1887, 6, 3), online_status='online')
+        username='seedData4lyf', email='john@aa.io', password='password', phone_number='2524142434', profile_pic='http://discord-clone-bucket.s3.amazonaws.com/95545e55f2394389aefc76fd6fc67610.jpeg', about_me='I love seed data', birthday=date(1887, 6, 3), online_status='online')
     dylan = User(
-        username='Dylan', email='info@dylanpeate.com', password='password', phone_number='7722336222', about_me='', birthday=date(2002, 1, 12), online_status='away'
+        username='Dylan', email='info@dylanpeate.com', password='password', profile_pic='http://discord-clone-bucket.s3.amazonaws.com/95545e55f2394389aefc76fd6fc67610.jpeg', phone_number='7722336222', about_me='', birthday=date(2002, 1, 12), online_status='away'
     )
     fino = User(
-        username='Gorilla', email='elisaia55@yahoo.com', password='password', phone_number='5102849432', about_me='bad at football', birthday=date(1997, 4, 13), online_status='DND'
+        username='Gorilla', email='elisaia55@yahoo.com', password='password', profile_pic='http://discord-clone-bucket.s3.amazonaws.com/95545e55f2394389aefc76fd6fc67610.jpeg', phone_number='5102849432', about_me='bad at football', birthday=date(1997, 4, 13), online_status='DND'
     )
     patrick = User(
-        username='Flakes', email='p.mcginn.m@gmail.com', password='password', phone_number='8022822223', about_me='Tarkov Enjoyer', birthday=date(1992,3,24), online_status='online'
+        username='Flakes', email='p.mcginn.m@gmail.com', password='password', profile_pic='http://discord-clone-bucket.s3.amazonaws.com/95545e55f2394389aefc76fd6fc67610.jpeg', phone_number='8022822223', about_me='Tarkov Enjoyer', birthday=date(1992,3,24), online_status='online'
     )
 
     db.session.add(demo)

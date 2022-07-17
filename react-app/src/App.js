@@ -34,7 +34,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
+      {/* <NavBar /> */}
       <Switch>
         <ProtectedRoute path='/channels/:serverId/:channelId'>
           <Channels />
