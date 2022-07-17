@@ -1,9 +1,58 @@
 .channel-container {
-    display: flex;
+    /* display: flex; */
+    display: grid;
+    grid-template-columns: 1fr 6fr;
     background-color: rgb(47, 49, 54);
 }
 
 .new-channel-errors {
     color: red;
     z-index: 1000;
+}
+
+.channels {
+    width: 240px;
+    height: 100vh;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .message-box-container {
+    overflow-y: auto;
+} */
+.user-info {
+    /* display: flex;
+    justify-self: flex-end; */
+    position: absolute;
+    bottom: 0;
+}
+
+.channel-div {
+    color: rgb(125, 127, 132);
+    height: 30px;
+}
+
+.channel-div:hover {
+    background-color: rgb(66, 70, 77);
+    color: white;
+}
+
+.channel-info {
+    padding-left: 12px;
+}
+
+.channels-banner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#text-banner {
+    padding-left: 10px;
+    color: rgb(125, 127, 132);
 }

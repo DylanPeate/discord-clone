@@ -15,6 +15,7 @@ const Channels = (props) => {
     const history = useHistory()
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user)
+    const serverList = useSelector(state => state.session.servers)
     const channelObj = Object.values((useSelector(state => state.channels)))
     const channelList = channelObj.filter(channel => { return channel.server_id === serverId })
     const [activeChannel, setActiveChannel] = useState(default_channel)
@@ -127,6 +128,19 @@ const Channels = (props) => {
         <div className="channel-container">
             <div className="channels">
                 <div>
+                    {serverList[serverId].name}
+                </div>
+                <div className='channels-banner'>
+                    <p id='text-banner'>TEXT CHANNELS</p>
+                    <button>+</button>
+                </div>
+                <div>
+                    {errors.length > 0 && channelSubmitted && errors.map((error, ind) => {
+                        <div key={ind} className='new-channel-errors'>Error: {error}</div>
+                        { console.log('should be showing errors', error) }
+                    })}
+                </div>
+                <div>
                     <input
                         placeholder="new channel"
                         value={newChannelName}
@@ -134,12 +148,7 @@ const Channels = (props) => {
                         onChange={e => setNewChannelName(e.target.value)}
                     ></input>
                     <button onClick={e => newChannel()}>New</button>
-                    <div>
-                        {errors.length > 0 && channelSubmitted && errors.map((error, ind) => {
-                            { console.log('should be showing errors', error) }
-                            <div key={ind} className='new-channel-errors'>Error: {error}</div>
-                        })}
-                    </div>
+
                 </div>
                 <div>
                     {/* <p>TEXT CHANNELS</p> */}
@@ -156,7 +165,12 @@ const Channels = (props) => {
                                 </form>
                             </div>
                                 :
-                                <button onClick={e => changeChannel(channel)}>{channel.name}</button>
+                                <div onClick={e => changeChannel(channel)} className='channel-div'>
+                                    <div className='channel-info'>
+                                        # {channel.name}
+                                    </div>
+                                </div>
+                                // <button onClick={e => changeChannel(channel)}>{channel.name}</button>
                             }
                             {channel.owner_id === user.id ? <div>
                                 <button onClick={e => editChannel(channel.id)}>E</button>
@@ -164,6 +178,9 @@ const Channels = (props) => {
                             </div> : <></>}
                         </div>
                     ))}
+                </div>
+                <div className='user-info'>
+                    <p>{user.username}</p>
                 </div>
             </div>
             <div className="message-box-container">

@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import messagesReducer, { sendMessage, getMessages, removeMessage, editMessage } from '../../store/messages'
 import './messages.css'
@@ -17,6 +17,7 @@ const Messages = (props) => {
     const [messages, setMessages] = useState(allMsgs)
     const allUsers = Object.values(useSelector(state => state.allUsers))
     const currentUser = useSelector(state => state.session.user)
+    const messagesEndRef = useRef(null)
 
 
     useEffect(() => {
@@ -26,12 +27,6 @@ const Messages = (props) => {
         socket.emit("join", activeChannel)
 
         socket.on('chat', chat => {
-            // console.log(chat, '<====LOOK CHAT')
-            // (async () => {
-            //     dispatch(getMessages()).then((res) => {
-            //         setMessages(Object.values(res))
-            //     })
-            // })()
             setMessages(messages => [...messages, chat]);
         })
 
@@ -57,6 +52,10 @@ const Messages = (props) => {
         })
     }, [activeChannel])
 
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView()
+    }, [messages])
+
     const sendChat = (e) => {
         e.preventDefault()
         const newMsg = {
@@ -69,10 +68,10 @@ const Messages = (props) => {
         setChatInput('')
     }
 
-    function getUserName(msg) {
+    function getUser(msg) {
         for (let i = 0; i < allUsers.length; i++) {
             if (allUsers[i].id === msg.user_id) {
-                return allUsers[i].username
+                return allUsers[i]
             }
         }
     }
@@ -114,14 +113,24 @@ const Messages = (props) => {
 
     return (user &&
         <div className='message-box'>
-            <div>
+            <div className='messages'>
                 {messages?.map((message, ind) => (
                     <div key={ind}>
                         {message.channel_id === activeChannel ?
                             <div className='message-container'>
                                 <div>
                                     {editing !== message.id ?
-                                        <div>{`${getUserName(message)}: ${message.body}`}</div> :
+                                        <div className='msg'>
+                                            <div className='msg-profile-pic'>
+                                                <img id='msg-profile-pic' src={`${getUser(message).profile_pic}`} alt={getUser(message).profile_pic}></img>
+                                            </div>
+                                            <div className='msg-username'>
+                                                {getUser(message).username}
+                                            </div>
+                                            <div className='msg-body'>
+                                                {message.body}
+                                            </div>
+                                        </div> :
                                         <div>
                                             <form onSubmit={e => editSubmit(e, message)}>
                                                 <input
@@ -137,10 +146,9 @@ const Messages = (props) => {
                                     }
                                     <div>
                                         {message.user_id === currentUser.id &&
-                                            <div>
+                                            <div className='msg-btns'>
                                                 <button onClick={e => deleteMsg(message)}>Delete</button>
                                                 <button onClick={e => editBtn(message.id)}>Edit</button>
-
                                             </div>
                                         }
                                     </div>
@@ -149,16 +157,21 @@ const Messages = (props) => {
                             </div> : <div></div>}
                     </div>
                 ))}
+                <div ref={messagesEndRef}></div>
             </div>
-            <form onSubmit={sendChat}>
-                <input
-                    value={chatInput}
-                    onChange={e => setChatInput(e.target.value)}
-                ></input>
-                <button disabled={submitDisable()} type="submit">Send</button>
-                {/* {chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : <p></p>} */}
-                {chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : <p></p>}
-            </form>
+            <div className='new-message'>
+                <form onSubmit={sendChat}>
+                    <input
+                        className='msg-input'
+                        placeholder={`Send a new message`}
+                        value={chatInput}
+                        onChange={e => setChatInput(e.target.value)}
+                    ></input>
+                    <button disabled={submitDisable()} type="submit">Send</button>
+                    {/* {chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : <p></p>} */}
+                    {chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : <p></p>}
+                </form>
+            </div>
         </div>
 
     )

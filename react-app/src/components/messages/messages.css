@@ -1,7 +1,84 @@
 .message-box {
     background-color: rgb(54, 57, 63);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
+
 
 #red-text {
     color: red;
+}
+
+.new-message {
+    margin-bottom: 10px;
+    background-color: rgb(64, 68, 76);
+    /* padding-left: 10px;
+    padding-right: 10px; */
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+}
+
+.msg-input {
+    background-color: rgb(64, 68, 76);
+    color: white;
+    all: unset;
+    width: 90%;
+}
+
+.messages {
+    overflow-y: auto;
+}
+
+.msg {
+    /* background-color: pink; */
+    display: grid;
+    grid-template-columns: .2fr 1.8fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        'pic name'
+        'pic body';
+    align-items: center;
+    gap: 0px 0px;
+}
+
+#msg-profile-pic {
+    max-width: 50px;
+    height: 100%;
+    padding: 25px;
+}
+
+.msg-profile-pic {
+    grid-area: pic;
+}
+
+.msg-username {
+    grid-area: name;
+    display: flex;
+    font-weight: bold;
+}
+
+.msg-body {
+    grid-area: body;
+}
+
+.msg-btns {
+    display: none;
+}
+
+.msg:hover {
+    background-color: rgb(51, 53, 58);
+}
+
+.msg-btns .msg:hover {
+    display: flex;
+    z-index: 1000;
 }
