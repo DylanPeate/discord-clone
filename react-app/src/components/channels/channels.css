@@ -36,7 +36,7 @@
     height: 30px;
 }
 
-.channel-div:hover {
+.channel:hover {
     background-color: rgb(66, 70, 77);
     color: white;
 }
@@ -55,4 +55,269 @@
 #text-banner {
     padding-left: 10px;
     color: rgb(125, 127, 132);
+}
+
+#new-ch-img {
+    height: 15px;
+    width: 15px;
+}
+
+.open-new-channel-modal {
+    all: unset;
+    color: white;
+    background-color: transparent;
+}
+
+.open-new-channel-modal:hover {
+    all: unset;
+    cursor: pointer;
+    color: rgb(125, 127, 132);
+    background-color: transparent;
+    opacity: .9;
+}
+
+.new-channel-modal-container,
+.new-ch-overlay {
+    max-width: 100vw;
+    max-height: 100vh;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.new-ch-overlay {
+    background-color: rgba(49, 49, 49, 0.8);
+}
+
+.new-ch-content {
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    background-color: rgb(54, 57, 63);
+    width: 30%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 17px;
+}
+
+.text-ch-placeholder {
+    background-color: rgb(69, 73, 81);
+}
+
+.new-ch-input-container {
+    background-color: rgb(32, 34, 37);
+    color: white;
+}
+
+.new-ch-input-container input {
+    all: unset;
+    background-color: rgb(32, 34, 37);
+    color: white;
+}
+
+.new-ch-top-text {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.new-ch-top-text h3 {
+    font-weight: bold;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.new-ch-top-text p {
+    font-weight: 200;
+    font-size: 10px;
+    top: 2px;
+}
+
+.text-ch-placeholder {
+    /* width: 100%; */
+    display: flex;
+    border-radius: 5px;
+}
+
+.text-ch-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    padding: 0;
+}
+
+.text-ch-inner p {
+    margin: 0px;
+    padding: 0px;
+}
+
+#txt-ch-msg {
+    margin: 0px;
+    padding: 0px;
+}
+
+.text-ch-symbol {
+    margin-left: 10px;
+}
+
+#label-top-text {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.new-ch-input-container {
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#ch-input-txt {
+    margin-left: 5px;
+}
+
+#new-ch-input {
+    margin-left: 5px;
+    height: 40px;
+    width: 95%;
+}
+
+.new-ch-btns {
+    /* bottom: 0; */
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* #submit-new-ch {
+    all: unset;
+    margin-left: 6px;
+    margin-right: 6px;
+    background-color: rgb(88, 101, 242);
+    color: white;
+} */
+
+#submit-new-ch {
+    margin-left: 6px;
+    margin-right: 6px;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    height: 38px;
+    min-width: 96px;
+    min-height: 38px;
+    border: none;
+    color: #fff;
+    background-color: rgb(88, 101, 242);
+    transition: background-color .17s ease, color .17s ease;
+}
+
+#submit-new-ch:hover {
+    background-color: rgb(71, 82, 196);
+}
+
+#submit-new-ch:disabled {
+    color: rgb(148, 150, 154);
+    background-color: rgb(68, 75, 148);
+}
+
+#cancel-new-ch {
+    all: unset;
+    margin-right: 15px;
+    color: white;
+}
+
+#cancel-new-ch:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.channel-name {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.ch-edit-btns {
+    display: none;
+}
+
+.channels-list {
+    margin-bottom: 50px;
+    overflow-y: auto;
+}
+
+.channel:hover .ch-edit-btns {
+    display: flex;
+}
+
+#ch-del-img {
+    width: 15px;
+    height: 15px;
+}
+
+.channel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ch-edit-btns {
+    margin: 5px;
+}
+
+#ch-open-edit-btn {
+    padding-right: 5px;
+}
+
+#ch-open-edit-btn:hover {
+    cursor: pointer;
+}
+
+#ch-delete-btn:hover {
+    cursor: pointer;
+}
+
+.editing-ch {
+    display: flex;
+    flex-direction: row;
+}
+
+#ch-edit-img {
+    width: 15px;
+    height: 15px;
+}
+
+#ch-edit-input-cancel {
+    all: unset;
+}
+
+#ch-edit-input {
+    all: unset;
+    margin-left: 8px;
+    background-color: rgb(64, 68, 76);
+    color: white;
+    border-radius: 5pxs;
+}
+
+#edit-smb-btn {
+    all: unset;
+    background-color: transparent;
+}
+
+.red-text {
+    color: red;
+}
+
+.channel {
+    overflow: hidden;
 }

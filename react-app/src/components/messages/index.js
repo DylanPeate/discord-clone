@@ -21,6 +21,11 @@ const Messages = (props) => {
 
 
     useEffect(() => {
+        (async () => {
+            dispatch(getMessages()).then((res) => {
+                setMessages(Object.values(res))
+            })
+        })()
         setMessages(allMsgs)
         socket = io()
 
@@ -28,6 +33,7 @@ const Messages = (props) => {
 
         socket.on('chat', chat => {
             setMessages(messages => [...messages, chat]);
+            // dispatch(getMessages())
         })
 
         socket.on('delMsg', msgId => {
@@ -129,8 +135,8 @@ const Messages = (props) => {
                                                 <div>
                                                     {message.user_id === currentUser.id &&
                                                         <div className='msg-btn-container'>
-                                                            <img onClick={e => deleteMsg(message)} className='msg-btns' id='del-msg-btn' src='https://discord-clone-bucket.s3.amazonaws.com/delete.png'></img>
                                                             <img onClick={e => editBtn(message.id)} className='msg-btns' id='edit-msg-btn' src='https://discord-clone-bucket.s3.amazonaws.com/pencil+(1).png'></img>
+                                                            <img onClick={e => deleteMsg(message)} className='msg-btns' id='del-msg-btn' src='https://discord-clone-bucket.s3.amazonaws.com/delete.png'></img>
                                                             {/* <button className='msg-btns' onClick={e => deleteMsg(message)}>Delete</button> */}
                                                             {/* <button className='msg-btns' onClick={e => editBtn(message.id)}>Edit</button> */}
                                                         </div>

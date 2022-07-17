@@ -36,12 +36,6 @@ function App() {
     <BrowserRouter>
       {/* <NavBar /> */}
       <Switch>
-        <ProtectedRoute path='/channels/:serverId/:channelId'>
-          <Channels />
-        </ProtectedRoute>
-        <ProtectedRoute path='/test'>
-          <Messages />
-        </ProtectedRoute>
         <ProtectedRoute path='/me'>
           <ProfilePage />
         </ProtectedRoute>
@@ -51,9 +45,6 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/users/:userId' exact={true} >
-          <User />
-        </ProtectedRoute>
         <ProtectedRoute path='/' exact={true} >
           <Servers />
         </ProtectedRoute>
