@@ -126,32 +126,49 @@ const Messages = (props) => {
                                             </div>
                                             <div className='msg-username'>
                                                 {getUser(message).username}
+                                                <div>
+                                                    {message.user_id === currentUser.id &&
+                                                        <div className='msg-btn-container'>
+                                                            <img onClick={e => deleteMsg(message)} className='msg-btns' id='del-msg-btn' src='https://discord-clone-bucket.s3.amazonaws.com/delete.png'></img>
+                                                            <img onClick={e => editBtn(message.id)} className='msg-btns' id='edit-msg-btn' src='https://discord-clone-bucket.s3.amazonaws.com/pencil+(1).png'></img>
+                                                            {/* <button className='msg-btns' onClick={e => deleteMsg(message)}>Delete</button> */}
+                                                            {/* <button className='msg-btns' onClick={e => editBtn(message.id)}>Edit</button> */}
+                                                        </div>
+                                                    }
+                                                </div>
                                             </div>
                                             <div className='msg-body'>
                                                 {message.body}
                                             </div>
+
                                         </div> :
-                                        <div>
-                                            <form onSubmit={e => editSubmit(e, message)}>
-                                                <input
-                                                    required={true}
-                                                    defaultValue={message.body}
-                                                    onChange={e => setEditInput(e.target.value)}
-                                                ></input>
-                                                {editInput.length > 2000 ? <p id='red-text'>{2000 - editInput.length}</p> : editInput.length > 1799 ? <p>{2000 - editInput.length}</p> : <p></p>}
-                                                <button type='submit' disabled={editDisable()}>submit</button>
-                                                <button type='button' onClick={e => editBtn()}>Cancel</button>
-                                            </form>
+                                        <div className='msg'>
+                                            <div className='msg-profile-pic'>
+                                                <img id='msg-profile-pic' src={`${getUser(message).profile_pic}`} alt={getUser(message).profile_pic}></img>
+                                            </div>
+                                            <div className='msg-username'>
+                                                {getUser(message).username}
+                                            </div>
+                                            <div className='msg-body'>
+                                                <form className='edit-msg-form' onSubmit={e => editSubmit(e, message)}>
+                                                    <input
+                                                        className='edit-msg-input'
+                                                        required={true}
+                                                        defaultValue={message.body}
+                                                        onChange={e => setEditInput(e.target.value)}
+                                                    ></input>
+                                                    {editInput.length > 2000 ? <p id='red-text'>{2000 - editInput.length}</p> : editInput.length > 1799 ? <p>{2000 - editInput.length}</p> : <p></p>}
+                                                    <div className='edit-btns'>
+                                                        <button className='msg-submit-btn' type='submit' disabled={editDisable()}>
+                                                            <img className='cancel-edit-msg-btn' src='https://discord-clone-bucket.s3.amazonaws.com/send-message.png'></img>
+                                                        </button>
+                                                        <img className='cancel-edit-msg-btn' onClick={e => editBtn()} src='https://discord-clone-bucket.s3.amazonaws.com/cancel.png'></img>
+                                                    </div>
+                                                    {/* <button type='button' onClick={e => editBtn()}>Cancel</button> */}
+                                                </form>
+                                            </div>
                                         </div>
                                     }
-                                    <div>
-                                        {message.user_id === currentUser.id &&
-                                            <div className='msg-btns'>
-                                                <button onClick={e => deleteMsg(message)}>Delete</button>
-                                                <button onClick={e => editBtn(message.id)}>Edit</button>
-                                            </div>
-                                        }
-                                    </div>
                                 </div>
 
                             </div> : <div></div>}
@@ -160,15 +177,16 @@ const Messages = (props) => {
                 <div ref={messagesEndRef}></div>
             </div>
             <div className='new-message'>
-                <form onSubmit={sendChat}>
+                <form className='msg-form' onSubmit={sendChat}>
                     <input
                         className='msg-input'
                         placeholder={`Send a new message`}
                         value={chatInput}
                         onChange={e => setChatInput(e.target.value)}
                     ></input>
-                    <button disabled={submitDisable()} type="submit">Send</button>
-                    {/* {chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : <p></p>} */}
+                    <button className='new-msg-btn' disabled={submitDisable()} type="submit">
+                        <img className='new-msg-btn-img' src='https://discord-clone-bucket.s3.amazonaws.com/send-message.png' alt='send-msg'></img>
+                    </button>
                     {chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : <p></p>}
                 </form>
             </div>
