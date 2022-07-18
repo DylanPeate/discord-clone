@@ -101,6 +101,6 @@ In the future I would like to impliment servers, dms, and voice chat.
 ## Conatact
 
 - Dylan Peate
- <a href="">Linkedin</a>
+ <a href="https://www.linkedin.com/in/dylan-peate-839511231/">Linkedin</a>
  <a href="https://github.com/dylanpeate">Github</a>
  <a href="mailto:info@dylanpeate.com">Email me</a>
