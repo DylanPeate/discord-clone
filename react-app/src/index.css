@@ -6,6 +6,7 @@ body {
     background-color: rgb(54, 57, 63);
     color: white;
     font-family: 'Encode Sans', sans-serif;
+    scrollbar-color: dark;
 }
 
 input {
@@ -15,4 +16,25 @@ input {
 
 img {
     border-radius: 50%;
+}
+
+.scrollable-element {
+    scrollbar-color: dark;
+}
+
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    /* Remove scrollbar space */
+    background: transparent;
+    /* Optional: just make scrollbar invisible */
+}
+
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
 }
