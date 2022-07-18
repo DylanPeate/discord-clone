@@ -2,7 +2,7 @@ import { io } from 'socket.io-client'
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from 'react-router-dom'
-
+import { logout } from '../../store/session';
 import Messages from "../messages";
 import { loadChannels, createChannel, deleteChannel, editChannelStore, updateDelete } from "../../store/channels";
 import './channels.css'
@@ -156,6 +156,10 @@ const Channels = (props) => {
         setNewChannelModal(!newChannelModal)
     }
 
+    const logOutUser = () => {
+        dispatch(logout())
+    }
+
     return (
         <>
             {newChannelModal && <div className='new-channel-modal'>
@@ -186,6 +190,7 @@ const Channels = (props) => {
                                 onChange={e => setNewChannelName(e.target.value)}
                             ></input>
                         </div>
+                        {newChannelName.length > 25 ? <div className='red-text'>{25 - newChannelName.length}</div> : newChannelName.length > 20 ? <div>{25 - newChannelName.length}</div> : <div></div>}
                         <div className='new-ch-btns'>
                             <button id='cancel-new-ch' onClick={e => openNewChannelModal(e)}>Cancel</button>
                             <button id='submit-new-ch' onClick={e => newChannel()} disabled={errors.length}>Create Channel</button>
@@ -210,15 +215,6 @@ const Channels = (props) => {
                             { console.log('should be showing errors', error) }
                         })}
                     </div>
-                    {/* <div>
-                        <input
-                            placeholder="new channel"
-                            value={newChannelName}
-                            required={true}
-                            onChange={e => setNewChannelName(e.target.value)}
-                        ></input>
-                        <button onClick={e => newChannel()}>New</button>
-                    </div> */}
                     <div className='channels-list'>
                         {/* <p>TEXT CHANNELS</p> */}
                         {channelList.map((channel, ind) => (
@@ -257,7 +253,11 @@ const Channels = (props) => {
                         ))}
                     </div>
                     <div className='user-info'>
+                        <img id='msg-profile-pic' src={user.profile_pic} alt='user-profile-pic'></img>
                         <p>{user.username}</p>
+                        <button id='logout-btn' onClick={() => logOutUser()}>
+                            logout
+                        </button>
                     </div>
                 </div>
                 <div className="message-box-container">

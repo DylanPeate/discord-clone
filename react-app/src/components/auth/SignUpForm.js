@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
 
+import './signupform.css'
+
 /* eslint-disable no-useless-escape */
 //heroku push
 
@@ -81,64 +83,81 @@ const SignUpForm = () => {
 
 
   if (user) {
-    return <Redirect to='/' />;
+    return <Redirect to='/app' />;
   }
 
   return (
-    <form onSubmit={onSignUp}>
-      <div>
-        {errors.length > 0 && submitted && errors.map((error, ind) => (
-          <div id='hello' key={ind}>{error}</div>
-        ))}
+    <div className='background'>
+      <div id='signup-container' className='login-container'>
+        <div className='login-inner'>
+          <div className='login-top-text'>
+            <h2 id='top-text'>Create an account</h2>
+          </div>
+          <form className='login-form' onSubmit={onSignUp}>
+            <div>
+              {errors.length > 0 && submitted && errors.map((error, ind) => (
+                <div className='login-errors' key={ind}>{error}</div>
+              ))}
+            </div>
+            <div className='form-pass'>
+              <label>User Name</label>
+              <input
+                className='login-form-input'
+                type='text'
+                name='username'
+                onChange={e => setUsername(e.target.value)}
+                value={username}
+              ></input>
+            </div>
+            <div className='form-email'>
+              <label>Email</label>
+              <input
+                className='login-form-input'
+                type='text'
+                name='email'
+                onChange={e => setEmail(e.target.value)}
+                value={email}
+              ></input>
+            </div>
+            <div className='form-pass'>
+              <label>Birthday</label>
+              <input
+                className='login-form-input'
+                type='date'
+                name='birthday'
+                onChange={e => setBirthday(e.target.value)}
+                value={birthday}
+              ></input>
+            </div>
+            <div className='form-pass'>
+              <label>Password</label>
+              <input
+                className='login-form-input'
+                type='password'
+                name='password'
+                onChange={e => setPassword(e.target.value)}
+                value={password}
+              ></input>
+            </div>
+            <div className='form-pass'>
+              <label>Repeat Password</label>
+              <input
+                className='login-form-input'
+                type='password'
+                name='repeat_password'
+                onChange={e => setRepeatPassword(e.target.value)}
+                value={repeatPassword}
+                required={true}
+              ></input>
+            </div>
+            <button id='login-submit-btn' type='submit'>Register</button>
+            <div className='login-form-btm-text'>
+              <a id='signup-goto-login' href='/login'>Already have an account?</a>
+            </div>
+          </form>
+        </div>
       </div>
-      <div>
-        <label>User Name</label>
-        <input
-          type='text'
-          name='username'
-          onChange={e => setUsername(e.target.value)}
-          value={username}
-        ></input>
-      </div>
-      <div>
-        <label>Email</label>
-        <input
-          type='text'
-          name='email'
-          onChange={e => setEmail(e.target.value)}
-          value={email}
-        ></input>
-      </div>
-      <div>
-        <label>Birthday</label>
-        <input
-          type='date'
-          name='birthday'
-          onChange={e => setBirthday(e.target.value)}
-          value={birthday}
-        ></input>
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type='password'
-          name='password'
-          onChange={e => setPassword(e.target.value)}
-          value={password}
-        ></input>
-      </div>
-      <div>
-        <label>Repeat Password</label>
-        <input
-          type='password'
-          name='repeat_password'
-          onChange={e => setRepeatPassword(e.target.value)}
-          value={repeatPassword}
-          required={true}
-        ></input>
-      </div>
-      <button type='submit'>Sign Up</button>
-    </form>
+    </div>
   );
 };
 

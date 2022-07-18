@@ -1,0 +1,16 @@
+#signup-container {
+    height: 600px;
+    top: 20%;
+}
+
+#signup-goto-login {
+    all: unset;
+    color: rgb(11, 161, 223);
+    cursor: pointer;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+#signup-goto-login:hover {
+    text-decoration: underline;
+}
