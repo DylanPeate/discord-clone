@@ -9,7 +9,7 @@ def user_exists(form, field):
     email = field.data
     user = User.query.filter(User.email == email).first()
     if not user:
-        raise ValidationError('Email provided not found.')
+        raise ValidationError('Email or password is incorrect.')
 
 
 def password_matches(form, field):
@@ -18,12 +18,11 @@ def password_matches(form, field):
     email = form.data['email']
     user = User.query.filter(User.email == email).first()
     if not user:
-        raise ValidationError('No such user exists.')
+        raise ValidationError()
     if not user.check_password(password):
-        raise ValidationError('Password was incorrect.')
+        raise ValidationError('Email or password is incorrect.')
 
 
 class LoginForm(FlaskForm):
-    email = StringField('email', validators=[DataRequired(), user_exists])
-    password = StringField('password', validators=[
-                           DataRequired(), password_matches])
+    email = StringField('email', validators=[DataRequired("Email address is required"), Email("Enter a proper email address"), user_exists])
+    password = StringField('password', validators=[DataRequired("Password is required"), password_matches])

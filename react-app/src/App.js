@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar';
@@ -11,6 +11,7 @@ import ProfilePage from './components/profilePage';
 import Messages from './components/messages';
 import Servers from './components/servers'
 import Channels from './components/channels';
+import SplashPage from './components/splashpage';
 import { authenticate } from './store/session';
 import { getAllUsers } from './store/allUsers';
 import { getMessages } from './store/messages';
@@ -28,13 +29,14 @@ function App() {
     })();
   }, [dispatch]);
 
+  const sessionUser = useSelector(state => state.session.user)
+
   if (!loaded) {
-    return null;
+    return <SplashPage />;
   }
 
   return (
     <BrowserRouter>
-      {/* <NavBar /> */}
       <Switch>
         <ProtectedRoute path='/me'>
           <ProfilePage />
@@ -45,9 +47,15 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/' exact={true} >
-          <Servers />
+        <Route path='/' exact={true} >
+          {sessionUser ? <Servers /> : <SplashPage />}
+        </Route>
+        <ProtectedRoute path='/app' exact={true} >
+          {sessionUser ? <Servers /> : <SplashPage />}
         </ProtectedRoute>
+        <Route>
+          {sessionUser ? <Servers /> : <SplashPage />}
+        </Route>
       </Switch>
     </BrowserRouter>
   );
