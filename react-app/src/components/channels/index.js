@@ -26,7 +26,7 @@ const Channels = (props) => {
     const [errors, setErrors] = useState([])
     const [channelSubmitted, setChannelSubmitted] = useState(false)
     const [newChannelModal, setNewChannelModal] = useState(false)
-
+    //heroku push
     useEffect(() => {
         socket = io()
 
