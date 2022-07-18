@@ -106,7 +106,7 @@
 .msg-btn-container {
     display: flex;
     padding-right: 10px;
-    position: fixed;
+    /* position: fixed; */
     right: 15px;
 }
 
