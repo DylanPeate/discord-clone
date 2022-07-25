@@ -2,7 +2,7 @@
 
 <h3 align="center">A place to connect and talk to your friends.</h3>
 
-<p align="center"><a  href="https://dylanpeate.com">Live Demo</a></p>
+<p align="center"><a  href="https://dylan-peate-capstone.herokuapp.com/">Live Demo</a></p>
 
 ### Splash Page
 
