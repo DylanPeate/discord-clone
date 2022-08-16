@@ -25,7 +25,7 @@ function SplashPage() {
                 </div>
                 <div className='nav-links'>
                     <a className='nav-link' href='https://github.com/DylanPeate'>GitHub</a>
-                    <a className='nav-link' href='https://www.linkedin.com/in/dylan-peate-839511231/'>LinkdIn</a>
+                    <a className='nav-link' href='https://www.linkedin.com/in/dylan-peate-839511231/'>LinkedIn</a>
                 </div>
                 <div className='top-right'>
                     <button id='login-btn' onClick={() => history.push('/login')}>Login</button>
