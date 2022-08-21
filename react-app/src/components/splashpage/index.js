@@ -45,6 +45,17 @@ function SplashPage() {
                     </div>
                 </div>
             </div >
+            <div className='footer'>
+                <div className='footer-inner'>
+                    <a className='footer-text' target='_blank' href='https://reactjs.org/'>React</a>
+                    <a className='footer-text' target='_blank' href='https://redux.js.org/'>Redux</a>
+                    <a className='footer-text' target='_blank' href='https://flask.palletsprojects.com/en/2.2.x/'>Flask</a>
+                    <a className='footer-text' target='_blank' href='https://www.sqlalchemy.org/'>SQLAlchemy</a>
+                    <a className='footer-text' target='_blank' href='https://www.postgresql.org/'>Postgres</a>
+                    <a className='footer-text' target='_blank' href='https://socket.io/'>SocketIO</a>
+                    <a className='footer-text' target='_blank' href='https://aws.amazon.com/'>AWS</a>
+                </div>
+            </div>
             <img id='splash-background' src='https://discord-clone-bucket.s3.amazonaws.com/discord_background.jpg' alt='background-img'></img>
         </div >
     )
