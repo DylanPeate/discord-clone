@@ -12,6 +12,7 @@ const Messages = (props) => {
     const [chatInput, setChatInput] = useState('')
     const [editInput, setEditInput] = useState('')
     const [editing, setEditing] = useState(-1)
+    const [deleteModal, setDeleteModal] = useState(-1)
     const user = useSelector(state => state.session.user)
     const allMsgs = Object.values(useSelector(state => state.messages))
     const [messages, setMessages] = useState(allMsgs)
@@ -82,8 +83,15 @@ const Messages = (props) => {
         }
     }
 
-    const deleteMsg = async (msg) => {
-        dispatch(removeMessage(msg.id))
+    const deleteMsg = () => {
+        // dispatch(removeMessage(msg.id))
+        console.log('open modal')
+        setDeleteModal(!deleteModal)
+        return
+    }
+
+    const delConfirm = async (id) => {
+        dispatch(removeMessage(id))
     }
 
     const editBtn = (id = -1) => {
@@ -196,8 +204,25 @@ const Messages = (props) => {
                     {chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : <p></p>}
                 </form>
             </div>
+            {
+                deleteModal > -1 && <div className='deleteModalOuter'>
+                    <div className='deleteModal'>
+                        <div className='delModalText'>
+                            <p className='Bold'>Delete Message</p>
+                            <p className='small'>Are you sure you want to delete this message?</p>
+                        </div>
+                        <div className='delModalBtns'>
+                            <button className='modalBtn ' onClick={deleteMsg()}>
+                                Cancel
+                            </button>
+                            <button className='modalBtn redBtn'>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-
     )
 }
 
