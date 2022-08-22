@@ -206,7 +206,7 @@ const Channels = (props) => {
                     <div className='channels-banner'>
                         <p id='text-banner'>TEXT CHANNELS</p>
                         <button className='open-new-channel-modal' onClick={e => openNewChannelModal(e)}>
-                            <img id='new-ch-img' src='https://discord-clone-bucket.s3.amazonaws.com/plus.png' alt='add new channel'></img>
+                            <img id='new-ch-img' src='https://discord-clone-bucket.s3.amazonaws.com/white-plus.png' alt='add new channel'></img>
                         </button>
                     </div>
                     <div>

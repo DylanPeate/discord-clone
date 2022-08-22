@@ -12,6 +12,8 @@ const Messages = (props) => {
     const [chatInput, setChatInput] = useState('')
     const [editInput, setEditInput] = useState('')
     const [editing, setEditing] = useState(-1)
+    const [deleteModal, setDeleteModal] = useState(-1)
+    const [openDeleteModal, setOpenDeleteModal] = useState(false)
     const user = useSelector(state => state.session.user)
     const allMsgs = Object.values(useSelector(state => state.messages))
     const [messages, setMessages] = useState(allMsgs)
@@ -82,8 +84,21 @@ const Messages = (props) => {
         }
     }
 
-    const deleteMsg = async (msg) => {
-        dispatch(removeMessage(msg.id))
+    const deleteMsg = (msg = -1) => {
+        setDeleteModal(msg.id)
+        delModal()
+    }
+
+    const delModal = () => {
+        setOpenDeleteModal(!openDeleteModal)
+    }
+
+    const delConfirm = async (id) => {
+        if (deleteModal > -1) {
+            dispatch(removeMessage(deleteModal))
+            setDeleteModal(-1)
+            delModal()
+        }
     }
 
     const editBtn = (id = -1) => {
@@ -115,6 +130,7 @@ const Messages = (props) => {
         if (editInput.length > 2000) return true
         else return false
     }
+
 
 
     return (user &&
@@ -196,8 +212,25 @@ const Messages = (props) => {
                     {chatInput.length > 2000 ? <p id='red-text'>{2000 - chatInput.length}</p> : chatInput.length > 1799 ? <p>{2000 - chatInput.length}</p> : <p></p>}
                 </form>
             </div>
-        </div>
-
+            {
+                openDeleteModal && <div className='deleteModalOuter' onClick={e => delModal()} >
+                    <div className='deleteModal' onClick={e => e.stopPropagation()}>
+                        <div className='delModalText'>
+                            <p className='Bold'>Delete Message</p>
+                            <p className='small'>Are you sure you want to delete this message?</p>
+                        </div>
+                        <div className='delModalBtns'>
+                            <button className='modalBtn' onClick={e => delModal()}>
+                                Cancel
+                            </button>
+                            <button className='modalBtn redBtn' onClick={e => delConfirm(deleteModal)}>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div >
     )
 }
 

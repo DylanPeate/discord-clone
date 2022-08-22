@@ -184,3 +184,85 @@
 .new-msg-btn:disabled .new-msg-btn-img {
     display: none;
 }
+
+
+
+.delModalBtns {
+    display: flex;
+    flex-direction: row;
+    background-color: #303136;
+    padding: .75rem;
+    align-items: center;
+    justify-content: flex-end;
+    border-radius: 3px;
+}
+
+.modalBtn {
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    height: 32px;
+    min-width: 60px;
+    min-height: 32px;
+    border: none;
+    color: #fff;
+    background-color: rgb(88, 101, 242);
+    transition: background-color .17s ease, color .17s ease;
+    margin-left: 1.5rem;
+}
+
+.redBtn {
+    background-color: #D83C3E;
+}
+
+.modalBtn:hover {
+    background-color: rgb(71, 82, 196);
+}
+
+.redBtn:hover {
+    background-color: #b33133;
+}
+
+.deleteModalOuter {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.deleteModal {
+    position: absolute;
+    /* top: 33%;
+    right: 0;
+    left: 33%;
+    bottom: 0; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #37393F;
+    width: 20rem;
+    height: 7rem;
+    border-radius: 3px;
+}
+
+.delModalText {
+    padding-left: .75rem;
+}
+
+.bold {
+    font-weight: bolder;
+}
+
+.small {
+    font-size: 14px;
+    color: lightgray;
+}
