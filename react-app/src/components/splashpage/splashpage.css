@@ -71,7 +71,7 @@ body {
 }
 
 .nav-links {
-    margin-top: 10px;
+    margin-top: 1.3rem;
 }
 
 .top-right {
@@ -131,6 +131,9 @@ body {
 }
 
 #demo-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-image: none;
     background-color: rgb(34, 39, 42);
     color: white;
@@ -139,4 +142,38 @@ body {
 #demo-btn:hover {
     box-shadow: 0 8px 22px 0 rgb(37 44 97 / 15%), 0 4px 6px 0 rgb(93 100 148 / 20%);
     color: rgb(63, 78, 237);
+}
+
+#signup-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer {
+    bottom: 0px;
+    position: absolute;
+    width: 100vw;
+    background-color: #23272A;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+}
+
+.footer-text {
+    color: white;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-decoration: none;
+}
+
+.footer-text:hover {
+    text-decoration: underline;
 }
